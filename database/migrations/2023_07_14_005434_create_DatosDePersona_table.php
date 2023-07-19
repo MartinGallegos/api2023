@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255);
             $table->string('email', 255);
-            $table->ent('phone');
-            $table->text('menssage');
+            $table->bigInteger('phone');
+            $table->text('message');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('datosdepersonas');
+        Schema::dropIfExists('DatosDePersona');
     }
 };

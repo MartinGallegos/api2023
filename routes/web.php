@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Mail\recibido;
+use Illuminate\Notifications\Notification;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +17,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return (new recibido("Martin"))->render();
 });

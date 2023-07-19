@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\DatosDePersona;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendStorePersona;
 
 class DatosDePersonaController extends Controller
 {
@@ -31,9 +33,10 @@ class DatosDePersonaController extends Controller
     {
        $validated = $request->validate([ 
         'name' => 'required|max:255',
-        'email' => 'required|email|unique:datosdepersona,correo',
+        'email' => 'required|email|unique:datosdepersona,email',
         'phone' => 'required|max:255',
-        'message' =>'requerid'
+        'message' =>'required',
+        
        ]);
 
          $datosdepersona = DatosDePersona::create([
@@ -42,10 +45,15 @@ class DatosDePersonaController extends Controller
         'phone' => $request['phone'],
         'message' =>$request['message'],
         ]);
-
-         return response()->json([
+//envio de correo
+$details = [
+    'nombre' => $datosdepersona->name,
+];
+Mail::to('sandbox.smtp.mailtrap.io')->send(new SendStorePersona($details));
+         
+return response()->json([
             'mensaje' => 'La persona se agrego correctamente',
-            'data' => '$DatosDePersona'
+            'data' => '$DatosDePersona',
          ]);
     }
     
